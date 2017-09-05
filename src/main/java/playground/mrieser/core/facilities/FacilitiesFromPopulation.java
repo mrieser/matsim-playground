@@ -19,17 +19,11 @@
 
 package playground.mrieser.core.facilities;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
-import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.api.core.v01.population.Plan;
@@ -43,6 +37,11 @@ import org.matsim.facilities.ActivityFacilitiesFactory;
 import org.matsim.facilities.ActivityFacility;
 import org.matsim.facilities.ActivityOption;
 import org.matsim.facilities.OpeningTimeImpl;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Generates {@link ActivityFacility}s from the {@link Activity Activities} in a population 
@@ -129,7 +128,7 @@ public class FacilitiesFromPopulation {
 		int idxCounter = 0;
 		ActivityFacilitiesFactory factory = this.facilities.getFactory();
 		Map<Id<Link>, ActivityFacility> facilitiesPerLinkId = new HashMap<>();
-		Map<Coord, ActivityFacility> facilitiesPerCoordinate = new HashMap<Coord, ActivityFacility>();
+		Map<Coord, ActivityFacility> facilitiesPerCoordinate = new HashMap<>();
 		
 		for (Person person : population.getPersons().values()) {
 			for (Plan plan : person.getPlans()) {
@@ -169,10 +168,10 @@ public class FacilitiesFromPopulation {
 							facility.addActivityOption(option);
 						}
 						
-						((Activity) a).setFacilityId(facility.getId());
+						a.setFacilityId(facility.getId());
 						if (this.removeLinksAndCoordinates) {
-							((Activity) a).setLinkId(null);
-							((Activity) a).setCoord(null);
+							a.setLinkId(null);
+							a.setCoord(null);
 						}
 					}
 				}
@@ -181,7 +180,7 @@ public class FacilitiesFromPopulation {
 	}
 
 	private void assignOpeningTimes() {
-		Set<String> missingActTypes = new HashSet<String>();
+		Set<String> missingActTypes = new HashSet<>();
 		for (ActivityFacility af : this.facilities.getFacilities().values()) {
 			for (ActivityOption ao : af.getActivityOptions().values()) {
 				String actType = ao.getType();

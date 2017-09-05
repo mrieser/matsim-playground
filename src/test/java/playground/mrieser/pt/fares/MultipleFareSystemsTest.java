@@ -20,9 +20,6 @@
 
 package playground.mrieser.pt.fares;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.core.utils.collections.Tuple;
@@ -30,6 +27,9 @@ import org.matsim.facilities.ActivityFacilitiesImpl;
 import org.matsim.facilities.ActivityFacility;
 import org.matsim.facilities.ActivityFacilityImpl;
 import org.matsim.testcases.MatsimTestCase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MultipleFareSystemsTest extends MatsimTestCase {
 

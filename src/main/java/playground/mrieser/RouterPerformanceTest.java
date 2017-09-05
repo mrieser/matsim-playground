@@ -27,7 +27,6 @@ import org.matsim.core.router.util.AStarEuclideanFactory;
 import org.matsim.core.router.util.AStarLandmarksFactory;
 import org.matsim.core.router.util.DijkstraFactory;
 import org.matsim.core.router.util.LeastCostPathCalculatorFactory;
-import org.matsim.core.router.util.PreProcessDijkstra;
 import org.matsim.core.router.util.TravelDisutility;
 import org.matsim.core.router.util.TravelTime;
 
@@ -73,8 +72,8 @@ public class RouterPerformanceTest {
 	}
 
 	private interface RouterProvider {
-		public String getName();
-		public LeastCostPathCalculatorFactory getFactory(Network network, TravelDisutility costCalc, TravelTime timeCalc);
+		String getName();
+		LeastCostPathCalculatorFactory getFactory(Network network, TravelDisutility costCalc, TravelTime timeCalc);
 	}
 
 	private static class DijkstraProvider implements RouterProvider {
@@ -95,9 +94,7 @@ public class RouterPerformanceTest {
 		}
 		@Override
 		public LeastCostPathCalculatorFactory getFactory(final Network network, final TravelDisutility costCalc, final TravelTime timeCalc) {
-			PreProcessDijkstra preProcessData = new PreProcessDijkstra();
-			preProcessData.run(network);
-			return new DijkstraFactory(preProcessData);
+			return new DijkstraFactory(true);
 		}
 	}
 
@@ -108,7 +105,7 @@ public class RouterPerformanceTest {
 		}
 		@Override
 		public LeastCostPathCalculatorFactory getFactory(final Network network, final TravelDisutility costCalc, final TravelTime timeCalc) {
-			return new AStarEuclideanFactory(network, costCalc);
+			return new AStarEuclideanFactory();
 		}
 	}
 
@@ -119,7 +116,7 @@ public class RouterPerformanceTest {
 		}
 		@Override
 		public LeastCostPathCalculatorFactory getFactory(final Network network, final TravelDisutility costCalc, final TravelTime timeCalc) {
-			return new AStarLandmarksFactory(network, costCalc);
+			return new AStarLandmarksFactory();
 		}
 	}
 
